@@ -1,1 +1,3 @@
 # sajal.github.io
+
+Dr. Sajal Halder is a Research Fellow at RMIT University, Australia, where he works on AI-generated content analysis and misinformation detection on social media. From February 2024 to August 2025, he served as a Research Fellow at Data61, CSIRO, Australia, contributing to a Google-funded project on software vulnerability standardization in critical infrastructures. Prior to that, he was a Postdoctoral Research Fellow at Charles Sturt University, Wagga Wagga, NSW (December 2022 – February 2024), focusing on adversarially robust machine learning for software supply chain security.
