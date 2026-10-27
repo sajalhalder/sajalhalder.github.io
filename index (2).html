@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dr Your Name, Lecturer</title>
+<meta name="description" content="Academic website: research, teaching, publications, supervision and contact.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EEF1F4; --surface:#FFFFFF; --text:#14202B; --muted:#51606E;
+  --line:#CBD3DB; --accent:#2B50E6;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){color-scheme:dark;--bg:#0F1720;--surface:#16212C;--text:#E6EBF0;--muted:#9AA8B5;--line:#2A3846;--accent:#8CA6FF}
+}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#0F1720;--surface:#16212C;--text:#E6EBF0;--muted:#9AA8B5;--line:#2A3846;--accent:#8CA6FF}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--bg);color:var(--text);font:400 1.0625rem/1.65 var(--sans)}
+main{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+a{color:var(--accent);text-underline-offset:3px}
+a:focus-visible,button:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:4px}
+.bar{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:.75rem 1rem;margin-bottom:3rem}
+.bar nav a{margin-right:1.1rem;color:var(--muted);text-decoration:none}
+.bar nav a:hover{color:var(--text)}
+#theme{font:inherit;color:var(--muted);background:none;border:1px solid var(--line);border-radius:999px;padding:.25rem .8rem;cursor:pointer}
+.id{display:flex;gap:1.5rem;align-items:center;flex-wrap:wrap}
+.avatar{width:120px;height:120px;border-radius:50%;object-fit:cover;background:var(--surface);border:1px solid var(--line);display:grid;place-items:center;font-size:2.2rem;font-weight:600;color:var(--accent);flex:none}
+h1{font-size:clamp(1.9rem,5.5vw,2.8rem);line-height:1.12;font-weight:600;letter-spacing:-.02em;margin:0}
+.role{margin:.35rem 0 0;color:var(--muted)}
+.statement{max-width:62ch;margin:1.75rem 0 1.25rem}
+.links a{display:inline-block;margin:0 1.1rem .25rem 0}
+.cv{display:inline-block;margin-top:.5rem;padding:.45rem 1rem;border:1px solid var(--accent);border-radius:6px;text-decoration:none;font-weight:500}
+h2{font-size:1.45rem;font-weight:600;margin:3.5rem 0 1rem;letter-spacing:-.01em}
+h3{font-size:1.05rem;font-weight:600;margin:1.75rem 0 .25rem;color:var(--muted)}
+ul.plain{list-style:none;margin:0;padding:0}
+.plain li{padding:.85rem 0;border-top:1px solid var(--line)}
+.plain li:last-child{border-bottom:1px solid var(--line)}
+.plain p{margin:.2rem 0 0;color:var(--muted)}
+.item-title{font-weight:600}
+.tags{display:flex;flex-wrap:wrap;gap:.5rem}
+.tags li{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:.2rem .85rem;font-size:.95rem}
+.news li{display:grid;grid-template-columns:7.5rem 1fr;gap:.75rem}
+.news time{color:var(--muted);font-size:.95rem}
+.pub .venue{color:var(--muted)}
+.pub .plinks a{margin-right:.9rem;font-size:.95rem}
+.box{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:1rem 1.15rem}
+dl.office{display:grid;grid-template-columns:8rem 1fr;gap:.4rem 1rem;margin:0}
+dl.office dt{color:var(--muted)} dl.office dd{margin:0}
+footer{margin-top:4rem;color:var(--muted);font-size:.9rem}
+@media (max-width:520px){.news li{grid-template-columns:1fr;gap:0}dl.office{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main>
+  <div class="bar">
+    <nav aria-label="Sections">
+      <a href="#research">Research</a><a href="#teaching">Teaching</a><a href="#publications">Publications</a><a href="#supervision">Students</a><a href="#contact">Contact</a>
+    </nav>
+    <button id="theme" type="button" aria-label="Switch colour theme">Theme</button>
+  </div>
+
+  <header class="id">
+    <div id="photoSlot"></div>
+    <div>
+      <h1 id="name"></h1>
+      <p class="role" id="role"></p>
+      <p class="role" id="affil"></p>
+    </div>
+  </header>
+  <p class="statement" id="statement"></p>
+  <p class="links" id="profileLinks"></p>
+  <a class="cv" id="cv" href="cv.pdf">Download CV (PDF)</a>
+
+  <section id="newsSec"><h2>News</h2><ul class="plain news" id="news"></ul></section>
+  <section id="research"><h2>Research interests</h2><ul class="plain tags" id="interests" style="display:flex"></ul><p id="researchText"></p></section>
+  <section id="teaching"><h2>Teaching</h2><div id="courses"></div></section>
+  <section id="publications"><h2>Publications</h2><div id="pubs"></div></section>
+  <section id="supervision"><h2>Students and supervision</h2><div id="sup"></div></section>
+  <section id="contact"><h2>Contact and office hours</h2><div class="box"><dl class="office" id="office"></dl></div></section>
+
+  <footer>Last updated <span id="updated"></span>. © <span id="year"></span> <span id="footName"></span>.</footer>
+</main>
+
+<script>
+/* ===== EDIT THIS BLOCK: it is the only part you need to change ===== */
+const CONFIG = {
+  name: "Dr Your Name",
+  me: "Y. Name",                        // how your name appears in author lists (it will be bolded)
+  position: "Lecturer in Computer Science",
+  department: "School of Engineering and Computing",
+  university: "Your University",
+  photo: "photo.jpg",                   // put a square photo in the repo; leave "" to show initials
+  statement: "My research looks at how groups of AI agents can plan, write and check each other’s work. I teach programming and machine learning, and I supervise projects on applied AI.",
+  profileLinks: [
+    { label: "Google Scholar", url: "https://scholar.google.com/" },
+    { label: "ORCID", url: "https://orcid.org/" },
+    { label: "GitHub", url: "https://github.com/your-username" },
+    { label: "LinkedIn", url: "https://www.linkedin.com/in/your-profile" }
+  ],
+  news: [
+    { date: "2026-10-01", text: "Paper accepted at an international workshop on multi-agent systems." },
+    { date: "2026-09-15", text: "New semester begins: I’m teaching Machine Learning and Software Engineering." }
+  ],
+  interests: ["Multi-agent systems", "Large language models", "Evaluation of AI systems", "Computing education"],
+  researchText: "I’m interested in building reliable AI systems from small cooperating parts, and in measuring when they work and when they fail.",
+  courses: [
+    { status: "Current", code: "CS301", title: "Machine Learning", term: "Autumn 2026", desc: "Supervised learning, evaluation and responsible use.", url: "" },
+    { status: "Current", code: "CS210", title: "Software Engineering", term: "Autumn 2026", desc: "Teamwork, testing and version control.", url: "" },
+    { status: "Previous", code: "CS101", title: "Introduction to Programming", term: "Spring 2026", desc: "Python for first-year students.", url: "" }
+  ],
+  publications: [
+    { year: 2026, authors: ["Y. Name", "A. Coauthor"], title: "A layered multi-agent pipeline for controllable text generation", venue: "Workshop on Multi-Agent Systems", links: [{ label: "PDF", url: "" }, { label: "Code", url: "" }] },
+    { year: 2025, authors: ["B. Coauthor", "Y. Name"], title: "Evaluating agent feedback loops with small language models", venue: "Journal of Applied AI", links: [{ label: "DOI", url: "" }] }
+  ],
+  supervision: {
+    current: [{ name: "Student One", level: "PhD", topic: "Agent evaluation methods" }, { name: "Student Two", level: "MSc", topic: "Local LLMs for education" }],
+    alumni: [{ name: "Student Three", degree: "MSc", year: 2025, now: "ML engineer at a startup" }],
+    openings: "I’m looking for motivated MSc and PhD students in multi-agent systems. Email me with your CV and a short research idea."
+  },
+  office: [
+    ["Email", "you@university.edu"],
+    ["Office", "Room 4.12, Engineering Building"],
+    ["Office hours", "Tuesdays 14:00 to 16:00, or by appointment"],
+    ["Address", "School of Engineering and Computing, Your University, City, Country"]
+  ],
+  lastUpdated: "27 October 2026"
+};
+/* =================================================================== */
+
+const $ = id => document.getElementById(id);
+const el = (tag, text, cls) => { const e = document.createElement(tag); if (text !== undefined) e.textContent = text; if (cls) e.className = cls; return e; };
+const link = (label, url) => { const a = el("a", label); a.href = url; a.rel = "noopener"; return a; };
+const hide = id => { const s = $(id); if (s) s.hidden = true; };
+const C = CONFIG;
+
+/* identity */
+document.title = `${C.name}, ${C.position}`;
+$("name").textContent = C.name;
+$("role").textContent = C.position;
+$("affil").textContent = `${C.department}, ${C.university}`;
+$("statement").textContent = C.statement;
+$("footName").textContent = C.name;
+$("year").textContent = new Date().getFullYear();
+$("updated").textContent = C.lastUpdated;
+const initials = C.name.replace(/^(Dr|Prof|Professor|Mr|Ms|Mrs)\.?\s+/i, "").split(/\s+/).map(w => w[0]).slice(0, 2).join("");
+const av = el("div", initials, "avatar"); av.setAttribute("aria-hidden", "true");
+if (C.photo) {
+  const img = el("img"); img.className = "avatar"; img.alt = `Photo of ${C.name}`; img.src = C.photo;
+  img.onerror = () => img.replaceWith(av);
+  $("photoSlot").appendChild(img);
+} else $("photoSlot").appendChild(av);
+C.profileLinks.forEach(l => $("profileLinks").appendChild(link(l.label, l.url)));
+
+/* news (latest 5) */
+const news = [...C.news].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 5);
+if (!news.length) hide("newsSec");
+news.forEach(n => {
+  const li = el("li"); const t = el("time", new Date(n.date).toLocaleDateString("en-GB", { year: "numeric", month: "short", day: "numeric" }));
+  t.dateTime = n.date; li.append(t, el("span", n.text)); $("news").appendChild(li);
+});
+
+/* research */
+C.interests.forEach(i => $("interests").appendChild(el("li", i)));
+$("researchText").textContent = C.researchText;
+
+/* teaching, grouped by status */
+["Current", "Previous"].forEach(status => {
+  const list = C.courses.filter(c => c.status === status);
+  if (!list.length) return;
+  $("courses").appendChild(el("h3", status === "Current" ? "Current courses" : "Previous courses"));
+  const ul = el("ul", undefined, "plain");
+  list.forEach(c => {
+    const li = el("li"); const head = el("span", undefined, "item-title");
+    const label = `${c.code}: ${c.title}`;
+    head.appendChild(c.url ? link(label, c.url) : document.createTextNode(label));
+    li.append(head, el("p", `${c.term}. ${c.desc}`)); ul.appendChild(li);
+  });
+  $("courses").appendChild(ul);
+});
+
+/* publications, newest year first, my name in bold */
+const years = [...new Set(C.publications.map(p => p.year))].sort((a, b) => b - a);
+if (!years.length) hide("publications");
+years.forEach(y => {
+  $("pubs").appendChild(el("h3", String(y)));
+  const ul = el("ul", undefined, "plain pub");
+  C.publications.filter(p => p.year === y).forEach(p => {
+    const li = el("li"); const au = el("div");
+    p.authors.forEach((a, i) => {
+      au.appendChild(a === C.me ? el("strong", a) : document.createTextNode(a));
+      if (i < p.authors.length - 1) au.appendChild(document.createTextNode(", "));
+    });
+    const ti = el("div", p.title, "item-title"); const ve = el("div", p.venue, "venue"); const pl = el("div", undefined, "plinks");
+    p.links.filter(l => l.url).forEach(l => pl.appendChild(link(l.label, l.url)));
+    li.append(au, ti, ve, pl); ul.appendChild(li);
+  });
+  $("pubs").appendChild(ul);
+});
+
+/* supervision */
+const S = C.supervision;
+if (S.openings) { const b = el("div", undefined, "box"); b.appendChild(el("strong", "Prospective students")); b.appendChild(el("p", S.openings)); $("sup").appendChild(b); }
+if (S.current.length) {
+  $("sup").appendChild(el("h3", "Current students"));
+  const ul = el("ul", undefined, "plain");
+  S.current.forEach(s => { const li = el("li"); li.append(el("span", `${s.name} (${s.level})`, "item-title"), el("p", s.topic)); ul.appendChild(li); });
+  $("sup").appendChild(ul);
+}
+if (S.alumni.length) {
+  $("sup").appendChild(el("h3", "Alumni"));
+  const ul = el("ul", undefined, "plain");
+  S.alumni.forEach(s => { const li = el("li"); li.append(el("span", `${s.name} (${s.degree}, ${s.year})`, "item-title"), el("p", s.now)); ul.appendChild(li); });
+  $("sup").appendChild(ul);
+}
+
+/* contact */
+C.office.forEach(([k, v]) => {
+  const dt = el("dt", k), dd = el("dd");
+  if (/@/.test(v)) dd.appendChild(link(v, "mailto:" + v)); else dd.textContent = v;
+  $("office").append(dt, dd);
+});
+
+/* theme toggle (remembers choice) */
+const root = document.documentElement;
+try { const saved = localStorage.getItem("theme"); if (saved) root.dataset.theme = saved; } catch (e) {}
+$("theme").addEventListener("click", () => {
+  const dark = root.dataset.theme ? root.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+  root.dataset.theme = dark ? "light" : "dark";
+  try { localStorage.setItem("theme", root.dataset.theme); } catch (e) {}
+});
+</script>
+</body>
+</html>
